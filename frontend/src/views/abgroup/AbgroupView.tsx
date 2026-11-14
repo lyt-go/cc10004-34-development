@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { downloadEntries, listEntries, moduleMeta, runAction as applyAction } from '@/api/local-service'
 import type { EntryRow } from '@/data/types'
@@ -80,6 +81,9 @@ export default function AbgroupView() {
           <p className="page-desc">管理数据产品的流量分流配置，支持A/B实验、灰度发布和分层分流。</p>
         </div>
         <div className="page-actions">
+          <Link className="btn" to="/hit-sandbox">
+            进入命中沙盘
+          </Link>
           <button className="btn primary" type="button" onClick={() => setErrorMessage('分流方案登记入口尚未接入审批流')}>
             登记分流方案
           </button>

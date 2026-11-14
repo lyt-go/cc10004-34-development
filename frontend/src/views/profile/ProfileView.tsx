@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { downloadEntries, listEntries, moduleMeta, runAction as applyAction } from '@/api/local-service'
 import type { EntryRow } from '@/data/types'
@@ -28,15 +29,15 @@ const statuses = [
 const stats = [
   {
     "label": "画像定义总数",
-    "value": 0
+    "status": ""
   },
   {
     "label": "已发布画像",
-    "value": 0
+    "status": "已发布"
   },
   {
     "label": "画像评审中",
-    "value": 0
+    "status": "画像评审中"
   }
 ]
 
@@ -80,6 +81,9 @@ export default function ProfileView() {
           <p className="page-desc">定义用户或业务对象的画像标签和维度，提供多层次聚合视图。</p>
         </div>
         <div className="page-actions">
+          <Link className="btn" to="/hit-sandbox">
+            进入命中沙盘
+          </Link>
           <button className="btn primary" type="button" onClick={() => setErrorMessage('画像定义登记入口尚未接入审批流')}>
             登记画像定义
           </button>
@@ -93,7 +97,11 @@ export default function ProfileView() {
         {stats.map((item) => (
           <article key={item.label} className="stat-card">
             <span className="stat-label">{item.label}</span>
-            <strong className="stat-value">{item.value}</strong>
+            <strong className="stat-value">
+              {item.status === ''
+                ? total
+                : rows.filter((row) => String(row.status) === item.status).length}
+            </strong>
           </article>
         ))}
       </div>
